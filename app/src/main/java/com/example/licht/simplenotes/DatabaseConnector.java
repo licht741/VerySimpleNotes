@@ -21,7 +21,7 @@ public class DatabaseConnector {
     public void addRecord(String record) {
         ContentValues contentValues = new ContentValues();
         contentValues.put("record", record);
-        if (!database.isOpen())
+        if (database == null || !database.isOpen())
             this.open();
         database.insert(TABLE, null, contentValues);
     }
@@ -29,7 +29,7 @@ public class DatabaseConnector {
     public ArrayList<String> getAllRecords() {
         ArrayList<String> result = new ArrayList<>();
 
-        if (!database.isOpen())
+        if (database == null || !database.isOpen())
             this.open();
 
         Cursor resCursor = database.query(TABLE, new String[]{"record"},
@@ -51,6 +51,7 @@ public class DatabaseConnector {
     private void open() throws SQLException
     {
         database = databaseOpenHelper.getWritableDatabase();
+
     }
 
     private void close() {
