@@ -1,5 +1,6 @@
 package com.example.licht.simplenotes;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -22,20 +23,13 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        contentListView = (ListView)findViewById(R.id.contentListView);
 
         mConnector = new DatabaseConnector(getApplicationContext());
 
-
-        contentListView = (ListView)findViewById(R.id.contentListView);
-
         notes = mConnector.getAllRecords();
-
         adapter = new ArrayAdapter<>(this, R.layout.record_layout, notes);
         contentListView.setAdapter(adapter);
-
-
-
-
     }
 
     public void addNoteHandler(View view) {
@@ -44,17 +38,31 @@ public class MainActivity extends AppCompatActivity {
         CheckBox reverseOrderCheckBox = (CheckBox)findViewById(R.id.reverseOrderCheckBox);
 
         String newNote = source.getText().toString();
-        //adapter.insert(newNote, adapter.getCount());
-
         mConnector.addRecord(newNote);
         if (reverseOrderCheckBox.isChecked())
             notes.add(notes.size() ,newNote);
         else
             notes.add(0, newNote);
-
-
         source.setText("");
-
         adapter.notifyDataSetChanged();
+    }
+
+    public void shareHandler(View view) {
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append(getString(R.string.notes_head))
+                .append("\n");
+        for (String note: notes)
+            stringBuilder.append(note)
+                    .append("\n");
+
+        String result = stringBuilder.toString();
+
+        Intent intent = new Intent(Intent.ACTION_SEND);
+
+        intent.putExtra(Intent.EXTRA_TEXT, result);
+
+
+        if (intent.resolveActivity(getPackageManager()) != null)
+            startActivity(intent);
     }
 }

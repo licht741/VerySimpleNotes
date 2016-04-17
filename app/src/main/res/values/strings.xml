@@ -4,4 +4,5 @@
     <string name="share_button_label">Share</string>
     <string name="reverse_order_label">Add to end</string>
     <string name="new_record_hint_label">Enter your note</string>
+    <string name="notes_head">Notes list:</string>
 </resources>

@@ -5,4 +5,5 @@
     <string name="share_button_label">Отправить</string>
     <string name="reverse_order_label">Добавлять в конец</string>
     <string name="new_record_hint_label">Введите вашу заметку</string>
+    <string name="notes_head">Список заметок:</string>
 </resources>
