@@ -4,4 +4,5 @@
     <string name="add_button_label">Добавить</string>
     <string name="share_button_label">Отправить</string>
     <string name="dark_theme_label">Тёмная тема</string>
+    <string name="new_record_hint_label">Введите вашу заметку</string>
 </resources>

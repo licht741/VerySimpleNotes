@@ -3,4 +3,5 @@
     <string name="add_button_label">Add</string>
     <string name="share_button_label">Share</string>
     <string name="dark_theme_label">Dark theme</string>
+    <string name="new_record_hint_label">Enter your note</string>
 </resources>
