@@ -1,0 +1,6 @@
+<resources>
+    <string name="app_name">Simple Notes</string>
+    <string name="add_button_label">Add</string>
+    <string name="share_button_label">Share</string>
+    <string name="dark_theme_label">Dark theme</string>
+</resources>
