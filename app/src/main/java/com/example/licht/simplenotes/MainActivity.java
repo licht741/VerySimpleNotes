@@ -15,6 +15,8 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
     List<String> notes;
     ListView contentListView;
+    EditText source;
+    CheckBox reverseOrderCheckBox;
     ArrayAdapter<String> adapter;
 
     DatabaseConnector mConnector;
@@ -23,7 +25,10 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         contentListView = (ListView)findViewById(R.id.contentListView);
+        source = (EditText)findViewById(R.id.newRecordEditText);
+        reverseOrderCheckBox = (CheckBox)findViewById(R.id.reverseOrderCheckBox);
 
         mConnector = new DatabaseConnector(getApplicationContext());
 
@@ -33,15 +38,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void addNoteHandler(View view) {
-
-        EditText source = (EditText)findViewById(R.id.newRecordEditText);
-        CheckBox reverseOrderCheckBox = (CheckBox)findViewById(R.id.reverseOrderCheckBox);
-
         String newNote = source.getText().toString();
 
         boolean isValidNote = checkNote(newNote);
         if (!isValidNote)
             return;
+
 
         boolean additionToEnd = reverseOrderCheckBox.isChecked();
 
@@ -56,6 +58,19 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void shareHandler(View view) {
+
+        String result = createList(notes);
+        Intent intent = new Intent(Intent.ACTION_SEND);
+        intent.putExtra(Intent.EXTRA_TEXT, result);
+
+        if (intent.resolveActivity(getPackageManager()) != null)
+            startActivity(intent);
+    }
+
+    private boolean checkNote(String note) {
+        return !note.equals("");
+    }
+    private String createList(List<String> notes) {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append(getString(R.string.notes_head))
                 .append("\n");
@@ -64,18 +79,6 @@ public class MainActivity extends AppCompatActivity {
             stringBuilder.append(note)
                     .append("\n");
 
-        String result = stringBuilder.toString();
-
-        Intent intent = new Intent(Intent.ACTION_SEND);
-
-        intent.putExtra(Intent.EXTRA_TEXT, result);
-
-
-        if (intent.resolveActivity(getPackageManager()) != null)
-            startActivity(intent);
-    }
-
-    private boolean checkNote(String note) {
-        return !note.equals("");
+        return stringBuilder.toString();
     }
 }
