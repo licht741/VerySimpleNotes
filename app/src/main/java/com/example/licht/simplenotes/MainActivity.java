@@ -38,11 +38,19 @@ public class MainActivity extends AppCompatActivity {
         CheckBox reverseOrderCheckBox = (CheckBox)findViewById(R.id.reverseOrderCheckBox);
 
         String newNote = source.getText().toString();
-        mConnector.addRecord(newNote);
-        if (reverseOrderCheckBox.isChecked())
+
+        boolean isValidNote = checkNote(newNote);
+        if (!isValidNote)
+            return;
+
+        boolean additionToEnd = reverseOrderCheckBox.isChecked();
+
+        if (additionToEnd)
             notes.add(notes.size() ,newNote);
         else
             notes.add(0, newNote);
+        mConnector.addRecord(newNote);
+
         source.setText("");
         adapter.notifyDataSetChanged();
     }
@@ -51,6 +59,7 @@ public class MainActivity extends AppCompatActivity {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append(getString(R.string.notes_head))
                 .append("\n");
+
         for (String note: notes)
             stringBuilder.append(note)
                     .append("\n");
@@ -64,5 +73,9 @@ public class MainActivity extends AppCompatActivity {
 
         if (intent.resolveActivity(getPackageManager()) != null)
             startActivity(intent);
+    }
+
+    private boolean checkNote(String note) {
+        return !note.equals("");
     }
 }
