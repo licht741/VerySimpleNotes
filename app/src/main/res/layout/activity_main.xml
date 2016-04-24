@@ -15,17 +15,17 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
             <Button
-                android:id="@+id/shareRecordButton"
+                android:id="@+id/share_record_button"
                 android:layout_width="wrap_content"
-                android:layout_height="50dp"
+                android:layout_height="@dimen/share_button_layout_height"
                 android:layout_weight="1"
                 android:onClick="shareHandler"
                 android:text="@string/share_button_label"/>
 
             <CheckBox
-                android:id="@+id/reverseOrderCheckBox"
+                android:id="@+id/reverse_order_check_box"
                 android:layout_width="wrap_content"
-                android:layout_height="50dp"
+                android:layout_height="@dimen/reverse_checkbox_layout_height"
                 android:layout_weight="1"
                 android:text="@string/reverse_order_label"/>
         </LinearLayout>
@@ -34,7 +34,7 @@
             android:layout_height="match_parent">
 
             <EditText
-                android:id="@+id/newRecordEditText"
+                android:id="@+id/new_record_edit_text"
                 android:hint="@string/new_record_hint_label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -43,8 +43,8 @@
                 />
 
             <Button
-                android:id="@+id/addRecordButton"
-                android:layout_height="50dp"
+                android:id="@+id/add_record_button"
+                android:layout_height="@dimen/add_button_layout_height"
                 android:layout_width="wrap_content"
                 android:layout_weight="1"
                 android:onClick="addNoteHandler"
@@ -53,7 +53,7 @@
         </LinearLayout>
 
         <ListView
-            android:id="@+id/contentListView"
+            android:id="@+id/content_list_view"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent">
         </ListView>

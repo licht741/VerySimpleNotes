@@ -9,7 +9,6 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ListView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
@@ -26,9 +25,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        contentListView = (ListView)findViewById(R.id.contentListView);
-        source = (EditText)findViewById(R.id.newRecordEditText);
-        reverseOrderCheckBox = (CheckBox)findViewById(R.id.reverseOrderCheckBox);
+        contentListView = (ListView)findViewById(R.id.content_list_view);
+        source = (EditText)findViewById(R.id.new_record_edit_text);
+        reverseOrderCheckBox = (CheckBox)findViewById(R.id.reverse_order_check_box);
 
         mConnector = new DatabaseConnector(getApplicationContext());
 
@@ -59,12 +58,20 @@ public class MainActivity extends AppCompatActivity {
 
     public void shareHandler(View view) {
 
-        String result = createList(notes);
-        Intent intent = new Intent(Intent.ACTION_SEND);
-        intent.putExtra(Intent.EXTRA_TEXT, result);
+        String notesList = createList(notes);
+        Intent intent = createIntent(notesList);
 
         if (intent.resolveActivity(getPackageManager()) != null)
             startActivity(intent);
+    }
+
+
+    private Intent createIntent(String content) {
+        Intent intent = new Intent(Intent.ACTION_SEND);
+        intent.setType("text/plain");
+        intent.putExtra(Intent.EXTRA_TEXT, content);
+
+        return intent;
     }
 
     private boolean checkNote(String note) {
